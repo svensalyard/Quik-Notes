@@ -19,13 +19,12 @@ const readAndAppend = (content, file) => {
 	});
 };
 
-apiRouter.get("/notes/:id", (req, res) => {
-	const notesId = req.params.id;
+apiRouter.get("/notes", (req, res) => {
 	readFromFile("./db/db.json")
 		.then((data) => JSON.parse(data))
 		.then((json) => {
-			const result = json.filter((notes) => notes.id === notesId);
-			return result.length > 0 ? res.json(result) : res.json("No note with that ID");
+			const result = json.filter((notes) => notes);
+			return res.json(result);
 		});
 });
 
@@ -42,7 +41,7 @@ apiRouter.post("/notes", (req, res) => {
 		res.json(newNote);
 		console.log(res.json);
 	} else {
-		res.error("Error in adding tip");
+		console.log("error");
 	}
 });
 
